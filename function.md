@@ -1,3 +1,3 @@
 ~~~
-local <span style="color:purple">function catch(event)
+local <span style="color:purple">function</span> catch(event)
 ~~~
