@@ -8,3 +8,4 @@ local function catch(event)
             showTalk.alpha=0
         end
 ```
+<br> catch event에 clik함수를 걸어 클릭할때마다 다음 대사가 넘어가는 설정 </br> 
