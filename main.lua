@@ -2,32 +2,31 @@ local composer = require( "composer" )
 local scene = composer.newScene()
 
 function scene:create( event )
-	local sceneGroup = self.view
+   local sceneGroup = self.view
 	
-	local Proom = display.newImageRect("image/Proom.png",1280,720)
-   Proom.x,Proom.y=display.contentWidth*0.5, display.contentHeight*0.5
-   sceneGroup:insert(Proom)
+   local S1=display.newRect(display.contentWidth*0.5, display.contentHeight*0.27,465,35)
+   S1:setFillColor(0)
+   sceneGroup:insert(S1)
 
-   local soundEffect1 = audio.loadSound( "sound/view7_1.mp3" )
-   audio.play( soundEffect1 )
+   local S2=display.newRect(display.contentWidth*0.5, display.contentHeight*0.40,465,35)
+   S2:setFillColor(0)
+   sceneGroup:insert(S2)
 
-   local soundEffect2 = audio.loadSound("sound/view7_2.mp3")
+   local Iroom = display.newImageRect("image/Iroom.png",1280,720)
+   Iroom.x,Iroom.y=display.contentWidth*0.5, display.contentHeight*0.5
+   sceneGroup:insert(Iroom)
 
-   local soundEffect3 = audio.loadSound("sound/view7_3.mp3")
+   local detective = display.newImageRect("image/detective.png",1280,720) 
+   detective.x, detective.y = display.contentWidth*0.5, display.contentHeight*0.5
+   sceneGroup:insert(detective)
+   detective.fill.effect = "filter.brightness"
+   detective.fill.effect.intensity = 0
 
-   local a = display.newImageRect("image/양신일2.png",1280,720) 
-   a.x, a.y = display.contentWidth*0.5, display.contentHeight*0.5
-   sceneGroup:insert(a)
-   a.fill.effect = "filter.brightness"
-   a.fill.effect.intensity = 0
-   a.alpha=0
-            
-   local b = display.newImageRect("image/A.png",500,600) 
-   b.x, b.y = display.contentWidth*0.8, display.contentHeight*0.55
-   sceneGroup:insert(b)
-   b.fill.effect = "filter.brightness"
-   b.fill.effect.intensity = 0
-   b.alpha=0
+   local sA = display.newImageRect("image/A.png",500,600) 
+   sA.x, sA.y = display.contentWidth*0.8, display.contentHeight*0.55
+   sceneGroup:insert(sA)
+   sA.fill.effect = "filter.brightness"
+   sA.fill.effect.intensity = -0.2
 
    local menu = display.newImageRect("image/menu.png",1280,720)
    menu.x,menu.y=display.contentWidth*0.5, display.contentHeight*0.5
@@ -45,183 +44,159 @@ function scene:create( event )
    home.x,home.y=display.contentWidth*0.5, display.contentHeight*0.5
    sceneGroup:insert(home)
 
-   local bChatting = display.newImageRect("image/양도일Text.png",1280,720) 
-   bChatting.x, bChatting.y = display.contentWidth*0.5, display.contentHeight*0.5
-   bChatting.alpha=0
-   sceneGroup:insert(bChatting)
+   local detectiveChatting = display.newImageRect("image/detectiveText.png",1280,720) 
+   detectiveChatting.x, detectiveChatting.y = display.contentWidth*0.5, display.contentHeight*0.5
+   detectiveChatting.alpha=0
+   sceneGroup:insert(detectiveChatting)
 
-   local aChatting = display.newImageRect("image/양신일Text.png",1280,720) 
-   aChatting.x, aChatting.y = display.contentWidth*0.5, display.contentHeight*0.5
-   aChatting.alpha=0
-   sceneGroup:insert(aChatting)
+   local suspectChatting = display.newImageRect("image/양도일Text.png",1280,720) 
+   suspectChatting.x, suspectChatting.y = display.contentWidth*0.5, display.contentHeight*0.5
+   suspectChatting.alpha=0
+   sceneGroup:insert(suspectChatting)
 
-   local scrChatting = display.newImageRect("image/Chatting.png",1280,720) 
-   scrChatting.x, scrChatting.y = display.contentWidth*0.5, display.contentHeight*0.5
-   scrChatting.alpha=0
-   sceneGroup:insert(scrChatting)
+   local first = display.newImageRect("image/firstselect.png",1280,720)
+   first.x,first.y=display.contentWidth*0.5,display.contentHeight*0.5
+   first.alpha =0
+   sceneGroup:insert(first)    
 
+   local second = display.newImageRect("image/secondselect.png",1280,720)
+   second.x,second.y=display.contentWidth*0.5,display.contentHeight*0.5
+   second.alpha =0
+   sceneGroup:insert(second)
 
    local talk = { }
    local talkGroup = display.newGroup()
    local showTalk
 
-   talk[1]="야 이 개X끼야!!! 내가 이 계약을 어떻게 여기까지 끌고왔는데 감히 마지막에 니가 망쳐??\n이 X신새끼가!!! 내가 여기 들인 돈이 얼만데!!!! 감히 니가!!!"
-   talk[2]="미안해... 미안해... 하지만 문제점이 보이는데... 지나칠 수가 없었어...\n그래도 그것만 보완하면 계속 진행한다고 했어... 미안해... 때리지마..."
-   talk[3]="지금 그게 문제야?? 거기서 그딴식으로 하면 대놓고 나 엿먹으라는거 아니야??...\n너 이새끼 저번부터 내가 진행하는 건마다 지적하는거 수상했어. 이제 알겠네."
-   talk[4]="아스퍼거 어쩌구 등X인척 하더니만 나이먹고 너도 돈 욕심이라는게 생기나보지? \n니 지분도 내가 가져갔다고 이제와서 지X하는거냐? 설마 나 제끼고 회사 먹고싶어?!"
-   talk[5]="그런거 아니야... 그런식으로 말하지마..."
-   talk[6]="닥쳐!! X신새끼 주제에 감히 니가 날 가르치려들어? 감히 내자리를 탐내? "
-   talk[7]="회장님, 장애아동 후원행사 가실 시간입니다. 준비는 다 되셨습니까?"
-   talk[8]="… 지금 나간다. 아, 그리고 내 동생 오랜만에 회사에 온거 알지? \n원래 행사에 같이 가려했는데 혼자 있고 싶다 하더라고. \n괜히 돌아다니가 사고날까 걱정되니까 회장실 밖으로 못나가게 해줘."
-   talk[9]="네, 알겠습니다. 차 대기시키겠습니다."
-   talk[10]="들었냐? 너 잘걸렸다 딱기다려. \n오늘 행사갔다와서 너 정신교육 제대로 시켜줄테니까."
-   talk[11]="나도... 참을만큼 참았어... 더 이상 이렇게 살고싶지 않아... \n나도 사람답게 살고싶어.. 내 고통 그대로 느끼게 해줄게.. 양신일.."
+   talk[1]=" "
+   talk[2]="이름 양도일. 50세 남성. 피해자 양신일의 쌍둥이 동생.\n어릴적에 아스퍼거증후군 진단을 받으셨다죠? 타인과 잘 어울리지 못할 뿐\n평범한 의사소통은 가능하다 들었습니다만."
+   talk[3]=" ................."
+   talk[4]="피해자의 사망 추정시간동안 본인은 무엇을 하고 있었는지 알리바이를 말씀해주시죠."
+   talk[5]="........"
+   talk[6]="양도일씨? 계속 아무것도 말씀 안하실겁니까?"
+   talk[7]="아는건 다 말했어... 나는 안죽였다니까... 더 이상 할말없어 저리가..."
+   talk[8]="'예상대로 대화를 거부하는 모습이다. 상태도 많이 불안정해 보이는데...\n하나 남은 가족이 죽어서일까 아니면 본인이 진짜 범인이기 때문일까.'"
+   talk[9]="'역시...'"
 
-   local click=0
+   local click=1
+
+   local showTalk = display.newText(talk[1], display.contentWidth*0.5, display.contentHeight*0.8, "fonts/nanumgothic")
+   showTalk:setFillColor(0)
+   showTalk.size = 20
+   sceneGroup:insert(showTalk)
+
+   local selection1=">>양도일은 범인이기에 부족한 사람같다.\n"
+   local selection2=">>면담만으로 판단하기는 어렵다."
+
+   local showSelection1
+   local showSelection2
+   local showResult
+
+   local result1="그래. 이런 사람을 용의자로 두고 면담하는건 시간낭비같다.... \n그래도 대충 넘기는건 안될 말이지. 과거만 빠르게 살펴보기로 할까."
+   local result2="과거를 살펴보면 뭐라도 알아낼 수 있을 것 같다."
+
 
    local function catch(event)
-       click=click+1
+        click=click+1
 
-       if click==1 then   
-          a.alpha=1
-          aChatting.alpha=1
-          showTalk = display.newText(talk[1], display.contentWidth*0.5, display.contentHeight*0.8, "fonts/nanumgothic")
-          showTalk:setFillColor(0)
-          showTalk.size = 20
-          sceneGroup:insert(showTalk)
+        if click==1 then 
+            detectiveChatting.alpha=0
+            suspectChatting.alpha=0            
+            showTalk.alpha=0
         end
 
-        if click==2 then
-           audio.play( soundEffect2 )
-           aChatting.alpha=0
-           b.alpha=1
-           bChatting.alpha=0
-           showTalk.alpha=0
-           a.fill.effect.intensity = -0.2
+        if click==2 or click==4 or click==6 or click==8 then         
+            detective.fill.effect.intensity =0
+            sA.fill.effect.intensity =-0.2
+            suspectChatting.alpha=0
+            detectiveChatting.alpha=1
+        else 
+            sA.fill.effect.intensity =0
+            detective.fill.effect.intensity =-0.2
+            detectiveChatting.alpha=0
+            suspectChatting.alpha=1
+
+        end
+            showTalk.text = talk[click]
+        
+        if click == 9 then
+            suspectChatting.alpha=0
+            detectiveChatting.alpha=0
+
+            showSelection1 = display.newText(selection1, display.contentWidth*0.5, display.contentHeight*0.29, "fonts/nanumgothic" )
+            showSelection1:setFillColor(0)
+            showSelection1.size = 18
+            sceneGroup:insert(showSelection1)
+            first.alpha=1
+
+            showSelection2 = display.newText(selection2, display.contentWidth*0.5, display.contentHeight*0.40, "fonts/nanumgothic")
+            showSelection2:setFillColor(0)
+            showSelection2.size = 18
+            sceneGroup:insert(showSelection2)
+            second.alpha =1
+            
         end
 
-        if click==3 then
-           aChatting.alpha=0
-           b.alpha=1
-           bChatting.alpha=1
-           showTalk.alpha=1
-           a.fill.effect.intensity = -0.2
-           showTalk.text=talk[2]
+        if click>=9 then
+        	sA.fill.effect.intensity =0
+            detective.fill.effect.intensity =0
+            suspectChatting.alpha=0
+            detectiveChatting.alpha=1
         end
+    end
 
-        if click==4 or click==5 then
-           a.fill.effect.intensity = 0
-           b.fill.effect.intensity = -0.2
-           aChatting.alpha=1
-           bChatting.alpha=0
-           showTalk.text=talk[3]
+    Iroom:addEventListener("tap",catch) 
+
+
+    local function select1(event)
+        if click>=9 then
+        display.remove(showSelection1)
+        display.remove(showSelection2)
+        detectiveChatting.alpha=1
+
+        first.alpha=0
+        second.alpha=0
+
+        showResult = display.newText(result1, display.contentWidth*0.5, display.contentHeight*0.8, "fonts/nanumgothic")
+        showResult:setFillColor(0)
+        showResult.size = 20
+        sceneGroup:insert(showResult)
         end
+    end
 
-        if click==5 then
-           a.fill.effect.intensity = 0
-           b.fill.effect.intensity = -0.2
-           aChatting.alpha=1
-           bChatting.alpha=0
-           showTalk.text=talk[4]
+    S1:addEventListener("tap",select1) 
+
+    local function select2(event)
+    	if click>=9 then
+
+        first.alpha =0
+        second.alpha =0
+        display.remove(showSelection1)
+        display.remove(showSelection2)
+        detectiveChatting.alpha=1
+        first.alpha=0
+        second.alpha=0
+
+        showResult = display.newText(result2, display.contentWidth*0.5, display.contentHeight*0.8, "fonts/nanumgothic")
+        showResult:setFillColor(0)
+        showResult.size = 20
+        sceneGroup:insert(showResult)
         end
-
-        if click==6 then          
-            a.fill.effect.intensity =-0.2
-            b.fill.effect.intensity =0
-            aChatting.alpha=0
-            bChatting.alpha=1
-            showTalk.text = talk[5]
-        end
-
-        if click==7 then
-           audio.play( soundEffect1 )
-           a.fill.effect.intensity = 0
-           b.fill.effect.intensity = -0.2
-           aChatting.alpha=1
-           bChatting.alpha=0
-           showTalk.text = talk[6]
-        end
-
-      local second = 20
-        if click==8 then
-           audio.pause( soundEffect1 )
-            local function timeAttack( event )
-                second = second -1
-                if second == 19 then 
-                    audio.play( soundEffect3 )
-                    aChatting.alpha=0
-                    bChatting.alpha=0
-                    scrChatting.alpha=0
-                    a.fill.effect.intensity = -0.2
-                    b.fill.effect.intensity = -0.2
-                    showTalk.text=""
-        end
-
-         if second==18 then
-                    aChatting.alpha=0
-                    bChatting.alpha=0
-                    scrChatting.alpha=1
-                    a.fill.effect.intensity = -0.2
-                    b.fill.effect.intensity = -0.2
-                    showTalk.text=talk[7]
-                end
-            end
-            timer.performWithDelay( 1000, timeAttack, 0 ) 
-        end
-
-        if click==9 then
-           a.fill.effect.intensity = 0
-           b.fill.effect.intensity = -0.2
-           aChatting.alpha=1
-           bChatting.alpha=0
-           scrChatting.alpha=0
-           showTalk.text=talk[8]
-        end
-
-        if click==10 then
-           a.fill.effect.intensity = -0.2
-           b.fill.effect.intensity = -0.2
-           aChatting.alpha=0
-           bChatting.alpha=0
-           scrChatting.alpha=1
-           showTalk.text = talk[9]
-        end
-
-        if click==11 then
-           a.fill.effect.intensity = 0
-           b.fill.effect.intensity = -0.2
-           aChatting.alpha=1
-           bChatting.alpha=0
-           scrChatting.alpha=0
-           showTalk.text=talk[10]
-        end
-
-        if click==12 then
-            a.fill.effect.intensity =0
-            b.fill.effect.intensity =-0.2
-            aChatting.alpha=0
-            a.alpha=0
-            bChatting.alpha=1
-            a.fill.effect.intensity = -0.2
-           showTalk.text=talk[11]
-        end
-
-
-
-        if click==13 then
-           composer.setVariable("complete", true)
-            local options={
-                effect="fade",
-                time=500
-            }
-            composer.gotoScene("view8",options)
-        end
-   
-
-
 
     end
 
+    S2:addEventListener("tap",select2) 
+
+    local function next(event)
+    	if click>=11 then
+       composer.setVariable("complete", true)
+        local options={
+          effect="fade",
+          time=400
+        }
+        composer.gotoScene("view7",options)
+        end
+    end
 
     local function next(event)
           composer.setVariable("complete", true)
@@ -229,13 +204,13 @@ function scene:create( event )
           effect="fade",
           time=500
            }
-         composer.gotoScene("view8",options)
+         composer.gotoScene("view7",options)
       end
        skip:addEventListener("tap",next)
 
 
-    Proom:addEventListener("tap",catch)
 
-
+    Iroom:addEventListener("tap",next) 
+ 
 
 end
