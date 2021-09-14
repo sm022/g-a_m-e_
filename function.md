@@ -1,4 +1,4 @@
-```c++
+```lua
 local function catch(event)
   click=click+1
 
